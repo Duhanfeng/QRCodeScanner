@@ -8,7 +8,7 @@
                  xmlns:local="clr-namespace:QRCodeScanner"
                  mc:Ignorable="d"
                  d:DataContext="{d:DesignInstance local:MainWindowViewModel}"
-                 Title="扫码枪助手" Height="450" Width="800">
+                 Title="扫码枪助手" Height="450" Width="800" WindowStartupLocation="CenterScreen">
     <Grid>
         <DockPanel Margin="10">
             <StackPanel DockPanel.Dock="Top">

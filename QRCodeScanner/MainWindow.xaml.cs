@@ -145,7 +145,7 @@ namespace QRCodeScanner
             set { _deviceStateColor = value; NotifyOfPropertyChange(() => DeviceStateColor); }
         }
 
-        private string _filePath = @"D:\\decode.csv";
+        private string _filePath = @"C:\Users\Public\Documents\decode.csv";
 
         /// <summary>
         /// 文件路径
@@ -203,6 +203,20 @@ namespace QRCodeScanner
                         //执行相关任务.....
                         ScannedCode.Insert(0, code);
 
+                        var fileInfo = new FileInfo(FilePath);
+                        if (!fileInfo.Directory.Exists)
+                        {
+                            try
+                            {
+                                fileInfo.Directory.Create();
+                            }
+                            catch (DirectoryNotFoundException)
+                            {
+                                MessageBox.Show(Owner, "路径无效,无法创建相关文件!");
+                                return;
+                            }
+                        }
+
                         //写入本地
                         try
                         {
@@ -214,7 +228,11 @@ namespace QRCodeScanner
                                 }
                             }
                         }
-                        catch (Exception)
+                        catch (UnauthorizedAccessException)
+                        {
+                            MessageBox.Show(Owner, "无权限写入文件,请以管理员权限运行!");
+                        }
+                        catch (System.IO.IOException)
                         {
                             MessageBox.Show(Owner, "文件被占用,无法写入!");
                         }
